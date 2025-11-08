@@ -21,4 +21,4 @@ import { Engine, Input, Storage, Utils } from 'web-arcade-engine';
 ```
 
 ## License
-MIT © 2025 Greg Cathcart
+vibe coded with support from ChatGPT
