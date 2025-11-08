@@ -1,46 +1,35 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>Web Arcade Engine</title>
+  <title>Web Arcade</title>
   <link rel="stylesheet" href="./src/ui/theme.css" />
 </head>
 <body>
   <canvas id="game"></canvas>
   <script type="module">
     import { buildMenu } from './src/ui/menu.js';
-    import { Engine } from './src/core/engine.js';
-    import { Input } from './src/core/input.js';
 
     const games = [
-      { id: 'snake', name: 'Snake' },
-      { id: 'minesweeper', name: 'Minesweeper' },
-      { id: 'tetris', name: 'Tetris' },
-      { id: '2048', name: '2048' },
-      { id: 'breakout', name: 'Breakout' },
-      { id: 'pong', name: 'Pong' },
-      { id: 'asteroids', name: 'Asteroids' },
-      { id: 'roulette', name: 'Roulette' },
-      { id: 'baccarat', name: 'Baccarat' }
+      { id: 'tetris', name: 'Tetris', desc: 'Stack the falling tetrominoes. Clean lines, chase the high score.', ready: true, length: '3–10 min' },
+      { id: '2048', name: '2048', desc: 'Combine the tiles to reach 2048.', ready: false },
+      { id: 'breakout', name: 'Breakout', desc: 'Ball. Paddle. Bricks. Satisfaction.', ready: false },
+      { id: 'pong', name: 'Pong', desc: 'Classic two-paddle duel.', ready: false },
+      { id: 'asteroids', name: 'Asteroids', desc: 'Thrust and rotate to survive.', ready: false },
+      { id: 'roulette', name: 'Roulette', desc: 'Red or black? Chance is a fickle friend.', ready: false },
+      { id: 'baccarat', name: 'Baccarat', desc: 'Player vs Banker. Simple, elegant.', ready: false }
     ];
 
-    buildMenu(games).then(selected => {
-      console.log('Launch game:', selected);
-      const engine = new Engine({
-        update() {},
-        render(ctx) {
-          ctx.fillStyle = '#0f0';
-          ctx.font = '24px Courier New';
-          ctx.fillText(`Launching ${selected}...`, 50, 50);
-        },
-        onInit() {
-          const canvas = document.getElementById('game');
-          Input.init(canvas);
-        }
-      });
-      engine.attachCanvas('game');
-      engine.start();
+    const startMap = {
+      tetris: () => import('./games/tetris/tetris.js').then(m => m.startTetris())
+    };
+
+    buildMenu(games).then(id => {
+      const starter = startMap[id];
+      if (starter) starter();
+      else console.warn('Game not implemented yet:', id);
     });
   </script>
 </body>
