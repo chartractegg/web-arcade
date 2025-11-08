@@ -1,0 +1,8 @@
+{
+  "name": "web-arcade-engine",
+  "version": "1.0.0",
+  "description": "Shared engine for web arcade games (Snake, Tetris, 2048, etc.)",
+  "type": "module",
+  "author": "Greg Cathcart",
+  "license": "MIT"
+}
